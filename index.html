@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydrangea RedNote Cipher</title>
+    <link rel="stylesheet" href="https://zeyu-xie.github.io/Myosotis-Web/Scholar_Lite/index.css">
+    <link rel="icon" href="https://zeyu-xie.github.io/Myosotis-Web/Scholar_Lite/favicon.ico">
+
+    <style>
+        textarea {
+            width: 100%;
+            min-height: 20vh;
+            padding: 0.6rem 1rem;
+        }
+
+        th,
+        td {
+            padding: 0.3rem 0.5rem;
+        }
+
+        .escape-sequence {
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+
+    <!-- Google Tag Manager -->
+    <!-- <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-N6TRPH8Z');</script> -->
+    <!-- End Google Tag Manager -->
+
+</head>
+
+<body>
+
+    <!-- Google Tag Manager (noscript) -->
+    <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6TRPH8Z" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript> -->
+    <!-- End Google Tag Manager (noscript) -->
+
+    <header>
+        <h1 style="display: none;">Hydrangea Escape</h1>
+        <nav>
+            <a href="#">Hydrangea Escape</a>
+        </nav>
+    </header>
+    <div id="container">
+        <h2>Input Area</h2>
+        <textarea name="" id="input" placeholder="Input your string here."></textarea>
+        <h2>Output Area</h2>
+        <textarea name="" id="output" placeholder="The escaped string will be displayed here."
+            style="font-family: 'Courier New', Courier, monospace;"></textarea>
+        <h2>Hints</h2>
+        <ol>
+            <li>
+                <p><b>What is this tool for?</b></p>
+                <p>This tool is used to escape special characters in a string, which is useful when you want to use the
+                    string in a programming language.</p>
+            </li>
+            <li>
+                <p><b>How to use this tool?</b></p>
+                <p>Enter the string you want to escape in the input area, and the escaped string will be displayed in
+                    the output area.</p>
+            </li>
+            <li>
+                <p><b>What characters will be escaped?</b></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Character</th>
+                            <th>Escape Sequence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Backslash</td>
+                            <td class="escape-sequence">\</td>
+                            <td class="escape-sequence">\\</td>
+                        </tr>
+                        <tr>
+                            <td>Double quote</td>
+                            <td class="escape-sequence">"</td>
+                            <td class="escape-sequence">\"</td>
+                        </tr>
+                        <tr>
+                            <td>Newline</td>
+                            <td class="escape-sequence"></td>
+                            <td class="escape-sequence">\n</td>
+                        </tr>
+                        <tr>
+                            <td>Carriage return</td>
+                            <td class="escape-sequence"></td>
+                            <td class="escape-sequence">\r</td>
+                        </tr>
+                        <tr>
+                            <td>Tab</td>
+                            <td class="escape-sequence"></td>
+                            <td class="escape-sequence">\t</td>
+                        </tr>
+                        <tr>
+                            <td>Left curly brace</td>
+                            <td class="escape-sequence">{</td>
+                            <td class="escape-sequence">\{</td>
+                        </tr>
+                        <tr>
+                            <td>Right curly brace</td>
+                            <td class="escape-sequence">}</td>
+                            <td class="escape-sequence">\}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+            </ul>
+    </div>
+    <footer>
+        <p>
+            ©️ <time class="current_year">[Current Year]</time> <a href="https://zeyu-xie.github.io"
+                class="author">[Author]</a>. All rights reserved.
+        </p>
+        <nav>
+            <a href="mailto:xie.zeyu20@gmail.com">Email</a> |
+            <a href="https://github.com/zeyu-xie">GitHub</a>
+        </nav>
+    </footer>
+    <script src="https://zeyu-xie.github.io/Myosotis-Web/Scholar_Lite/index.js"></script>
+    <script>
+
+        let base64chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+        let hashedchars = "赵钱孙李周吴郑王冯陈褚卫蒋沈韩杨朱秦尤许何吕施张孔曹严华金魏陶姜戚谢邹喻柏水窦章云苏潘葛奚范彭郎鲁韦昌马苗凤花方俞任袁柳酆鲍史唐费";
+        let hash_a = new Map();
+        let hash_b = new Map();
+        for (let i = 0; i < base64chars.length; i++) {
+            hash_a.set(base64chars[i], hashedchars[i]);
+            hash_b.set(hashedchars[i], base64chars[i]);
+        }
+
+        const input = document.getElementById("input")
+        const output = document.getElementById("output")
+        input.addEventListener("change", () => {
+            const uint8Array = new TextEncoder().encode(input.value);
+            output.value = btoa(btoa(String.fromCharCode(...uint8Array))).split("").map(char => hash_a.get(char)).join("");
+        })
+        output.addEventListener("change", () => {
+            const uint8Array = atob(atob(output.value.split("").map(char => hash_b.get(char)).join(""))).split("").map(char => char.charCodeAt(0));
+            input.value = new TextDecoder().decode(new Uint8Array(uint8Array));
+        })
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LFF8GVT4L"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-7LFF8GVT4L');
+    </script> -->
+
+</body>
+
+</html>
